@@ -1,0 +1,35 @@
+[package]
+name = "cosmic-applet-disk-space"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.93"
+description = "Live, per-drive disk usage for the COSMIC panel"
+repository = "https://github.com/JoeyTong/cosmic-applet-disk-space"
+publish = false
+
+[features]
+default = ["applet"]
+applet = ["dep:libcosmic", "dep:tracing", "dep:tracing-subscriber"]
+
+[dependencies]
+# Cargo.lock pins the toolkit and its dependencies to the COSMIC 1.11 generation.
+libcosmic = { git = "https://github.com/pop-os/libcosmic", optional = true, default-features = false, features = ["applet", "dbus-config"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["rt", "process", "time", "macros"] }
+tracing = { version = "0.1", optional = true }
+tracing-subscriber = { version = "0.3", features = ["env-filter"], optional = true }
+
+[patch."https://github.com/smithay/client-toolkit.git"]
+sctk = { package = "smithay-client-toolkit", version = "0.20.0" }
+
+[patch."https://github.com/pop-os/cosmic-protocols"]
+cosmic-protocols = { git = "https://github.com/pop-os/cosmic-protocols//", rev = "c0cff4d" }
+cosmic-client-toolkit = { git = "https://github.com/pop-os/cosmic-protocols//", rev = "c0cff4d" }
+
+[profile.release]
+lto = "thin"
+strip = "debuginfo"
+
+[profile.dev]
+debug = 0

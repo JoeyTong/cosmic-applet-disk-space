@@ -1,0 +1,15 @@
+[Desktop Entry]
+Name=Disk Space
+Comment=Live used space for every local drive, with device icons and capacity warnings
+Type=Application
+Exec=cosmic-applet-disk-space
+Icon=io.github.joeytong.cosmic-applet-disk-space-symbolic
+Terminal=false
+Categories=COSMIC;System;Monitor;
+Keywords=COSMIC;Applet;Disk;Storage;SSD;HDD;USB;Space;
+NoDisplay=true
+StartupNotify=false
+X-CosmicApplet=true
+X-CosmicShrinkable=true
+X-OverflowMinSize=3
+X-OverflowPriority=50
