@@ -9,7 +9,7 @@ A native Rust/libcosmic panel applet showing **every local drive’s used space*
 
 ## Features
 
-- One compact entry per physical drive: type icon, rounded used/total capacity with a shared unit, and percentage. The used value is bold, with spaces around the slash for readability; drive names appear in the click-open popup.
+- One compact entry per physical drive: type icon, used/total capacity with a shared unit, and percentage. Each amount under 10 keeps one decimal place; larger amounts are whole numbers. The used value is bold, with spaces around the slash for readability; drive names appear in the click-open popup.
 - Distinct embedded, theme-colored **COSMIC-based icons**: solid SSD enclosures, HDD platters, cabled external variants, a USB symbol for flash drives, a memory-card silhouette, and a neutral unknown-drive enclosure. See [icon sources and attribution](data/icons/README.md).
 - **At ≥80% used:** warning-colored background, outline, text, and warning symbol. The threshold uses exact bytes, rather than a rounded percentage.
 - Click any drive for a softly accented summary with **large, bold used-space and utilization figures**, plus rounded filesystem cards with bold usage figures, progress bars, total capacity, and available space. Colors follow the native COSMIC light/dark theme. Drive entries have no hover tooltips.
@@ -62,7 +62,7 @@ If Settings was already open during installation, close and reopen it to refresh
 
 ## What the numbers mean
 
-The panel rounds capacity values to whole binary units and shows the unit once: `36 / 477 G · 7.5%` means approximately 36 GiB used out of 477 GiB, with the percentage calculated from the exact bytes. Compact suffixes are B, K, M, G, T, P, and E; G means GiB, not decimal GB. The popup uses explicit binary unit names and one decimal place. Rounding affects presentation only; the ≥80% warning uses exact byte counts.
+The panel shows capacity in binary units and prints the unit once: `36 / 477 G · 7.5%` means 36 GiB used out of 477 GiB, and `0.4 / 3.6 T` means 0.4 TiB used out of 3.6 TiB. Each amount under 10 keeps one decimal place, so a few hundred GiB on a multi-terabyte drive does not appear as 0; amounts of 10 or more stay whole numbers. The percentage is calculated from the exact bytes. Compact suffixes are B, K, M, G, T, P, and E; G means GiB, not decimal GB. The popup uses explicit binary unit names and one decimal place. Rounding affects presentation only; the ≥80% warning uses exact byte counts.
 
 `used / total` sums **mounted filesystem capacity**, not raw drive size. Unmounted partitions, swap, and unallocated space are excluded. Raw physical capacity is shown separately under **Details** in the popup. `used` follows the kernel’s filesystem usage (`f_blocks − f_bfree`), while “available to applications” uses `f_bavail`; reserved blocks can make these differ. This means the percentage can differ from `df`’s rounded, available-space-based percentage. The percentage is truncated to one decimal place so it never rounds up to 80% below the warning threshold.
 

@@ -293,6 +293,43 @@ fn malformed_output_is_an_error_and_impossible_stats_are_unavailable() {
 }
 
 #[test]
+fn panel_capacity_keeps_one_decimal_below_ten() {
+    const GIB: u64 = 1024 * 1024 * 1024;
+    assert_eq!(format_panel_amount(0.0), "0.0");
+    assert_eq!(format_panel_amount(0.348), "0.3");
+    assert_eq!(format_panel_amount(9.94), "9.9");
+    assert_eq!(format_panel_amount(9.96), "10");
+    assert_eq!(format_panel_amount(10.0), "10");
+    assert_eq!(format_panel_amount(18.188), "18");
+    assert_eq!(
+        panel_usage(36 * GIB, 477 * GIB).panel_capacity(),
+        "36 / 477 G"
+    );
+    // Hundreds of GiB on multi-terabyte drives must not collapse to 0.
+    assert_eq!(
+        panel_usage(449_120_399_360, 3_998_832_615_424).panel_capacity(),
+        "0.4 / 3.6 T"
+    );
+    assert_eq!(
+        panel_usage(382_954_582_016, 19_998_449_860_608).panel_capacity(),
+        "0.3 / 18 T"
+    );
+    // Only the side below 10 gains a decimal.
+    assert_eq!(
+        panel_usage(15 * GIB, 10_200_547_328).panel_capacity(),
+        "15 / 9.5 G"
+    );
+}
+
+fn panel_usage(used: u64, total: u64) -> Usage {
+    Usage {
+        used_bytes: used,
+        total_bytes: total,
+        available_bytes: None,
+    }
+}
+
+#[test]
 fn sysfs_virtual_or_remote_disks_are_excluded() {
     let input = serde_json::to_vec(&json!({ "blockdevices": [disk("sda", vec![])] })).unwrap();
     assert!(

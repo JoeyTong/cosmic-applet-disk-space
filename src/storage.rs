@@ -113,7 +113,8 @@ pub struct Usage {
 }
 
 impl Usage {
-    /// Whole binary units, with one shared suffix to keep panel entries compact.
+    /// One shared binary suffix. Each amount under 10 keeps one decimal place,
+    /// so a few hundred GiB does not appear as 0 TiB. Amounts of 10 or more stay whole.
     pub fn panel_capacity(self) -> String {
         const UNITS: [&str; 7] = ["B", "K", "M", "G", "T", "P", "E"];
         let mut divisor = 1.0;
@@ -123,9 +124,9 @@ impl Usage {
             unit += 1;
         }
         format!(
-            "{:.0} / {:.0} {}",
-            self.used_bytes as f64 / divisor,
-            self.total_bytes as f64 / divisor,
+            "{} / {} {}",
+            format_panel_amount(self.used_bytes as f64 / divisor),
+            format_panel_amount(self.total_bytes as f64 / divisor),
             UNITS[unit]
         )
     }
@@ -571,6 +572,16 @@ pub async fn scan() -> Result<Snapshot, String> {
         scan_duration_ms: started.elapsed().as_millis(),
         drives,
     })
+}
+
+/// One decimal below 10. A value that rounds to at least 10 stays a whole number.
+fn format_panel_amount(value: f64) -> String {
+    let tenths = (value * 10.0).round();
+    if tenths < 100.0 {
+        format!("{:.1}", tenths / 10.0)
+    } else {
+        format!("{:.0}", value)
+    }
 }
 
 pub fn format_bytes(bytes: u64) -> String {

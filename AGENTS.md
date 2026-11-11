@@ -24,7 +24,7 @@
 - Panel: drive-type icon, **bold used value**, spaced used/total capacity and percentage, e.g. **36** `/ 477 G · 7.5%`. No drive name or hover tooltip; click opens the popup.
 - Use the approved **COSMIC-based icon set C**: SSD enclosure, HDD platter, cabled external variants, USB symbol, memory-card silhouette and neutral fallback. Keep the assets embedded and symbolic; preserve the COSMIC-derived assets' CC BY-SA 4.0 attribution.
 - Keep both horizontal and vertical panel layouts, including constrained-space scrolling.
-- Units are binary. Compact panel `G` means GiB, not decimal GB; round panel capacities to whole units. Popup capacities use explicit binary units with one decimal place.
+- Units are binary. Compact panel `G` means GiB, not decimal GB. Each panel amount under 10 keeps one decimal place, so small usage is not shown as 0; amounts of 10 or more are whole numbers. Popup capacities use explicit binary units with one decimal place.
 - Percentages are truncated to one decimal. The ≥80% warning must compare exact byte counts, never formatted or rounded values. Keep warning symbols and visible stale/partial/shared states.
 - Popup: native light/dark theme colors, softly accented summary, rounded filesystem cards, large bold used-space and percentage figures, clearly labeled total and available capacity.
 - Device model, raw capacity, mountpoints and calculation notes belong in expandable **Details**. Keep expansion across refreshes; reset on popup close/reopen or selected-drive disconnection.

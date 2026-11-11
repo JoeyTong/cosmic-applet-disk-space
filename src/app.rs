@@ -711,7 +711,7 @@ fn technical_details(drive: &Drive) -> Element<'_, Message> {
         .push(widget::text::heading("How usage is calculated"))
         .push(quiet_text("Total capacity includes mounted filesystems only. Unmounted partitions, swap and unallocated space are excluded. Btrfs subvolumes and repeated mounts are counted once."))
         .push(quiet_text("Used space follows the kernel's filesystem usage. Available space is what applications can use; reserved blocks can make it smaller than total minus used."))
-        .push(quiet_text("Units are binary: GiB = 1024³ bytes. Panel G means GiB, rounded to whole units. Percentages are truncated to one decimal; the ≥80% warning uses exact bytes."));
+        .push(quiet_text("Units are binary: GiB = 1024³ bytes. Panel G means GiB. Amounts under 10 keep one decimal place; larger amounts are whole numbers. Percentages are truncated to one decimal; the ≥80% warning uses exact bytes."));
     if drive.shared {
         details = details.push(quiet_text("Shared filesystems show their complete usage on each physical member, not a per-disk allocation. Do not add these shared figures across drives."));
     }
