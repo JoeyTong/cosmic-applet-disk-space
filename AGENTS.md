@@ -29,7 +29,7 @@
 - Popup: native light/dark theme colors, softly accented summary, rounded filesystem cards, large bold used-space and percentage figures, clearly labeled total and available capacity.
 - Device model, raw capacity, mountpoints and calculation notes belong in expandable **Details**. Keep expansion across refreshes; reset on popup close/reopen or selected-drive disconnection.
 - Keep the popup bounded and scrollable, with the header and live-status footer accessible.
-- Scan every two seconds, with one scan in flight and a five-second timeout. Keep blocking filesystem work off the UI thread and retain last successful values on scan failure.
+- Scan every 20 seconds, with one scan in flight and a five-second timeout. Keep blocking filesystem work off the UI thread and retain last successful values on scan failure.
 - Aggregate mounted filesystem capacity, not raw physical capacity. Deduplicate Btrfs subvolumes and repeated mounts; preserve LUKS/LVM/MD relationships and shared-filesystem explanations.
 - Preserve unavailable, locked, unmounted and partially readable states rather than presenting missing usage as zero. Available space uses `f_bavail` and can differ from total minus used.
 - Storage collection is read-only and does not require root or mount/unlock devices.

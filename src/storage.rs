@@ -6,7 +6,7 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::path::Path;
 use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
 
-pub const REFRESH_INTERVAL: Duration = Duration::from_secs(2);
+pub const REFRESH_INTERVAL: Duration = Duration::from_secs(20);
 pub const SCAN_TIMEOUT: Duration = Duration::from_secs(5);
 pub const WARNING_PERCENT: u64 = 80;
 

@@ -258,12 +258,13 @@ impl cosmic::Application for DiskSpace {
         }
 
         let footer = quiet_text(format!(
-            "{} · refreshes every 2s · warning at ≥80%",
+            "{} · refreshes every {}s · warning at ≥80%",
             if self.error.is_some() {
                 "Retrying"
             } else {
                 "Live"
-            }
+            },
+            storage::REFRESH_INTERVAL.as_secs()
         ));
         let scrollbar = scrollable::Scrollbar::new()
             .width(4)

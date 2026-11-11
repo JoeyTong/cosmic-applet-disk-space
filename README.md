@@ -1,6 +1,6 @@
 # COSMIC Disk Space
 
-A native Rust/libcosmic panel applet showing **every local drive’s used space**, refreshed every **2 seconds**.
+A native Rust/libcosmic panel applet showing **every local drive’s used space**, refreshed every **20 seconds**.
 
 ```text
 [SSD icon] 36 / 477 G · 7.5%
@@ -96,7 +96,7 @@ desktop-file-validate data/io.github.joeytong.cosmic-applet-disk-space.desktop
 
 `Cargo.lock` pins libcosmic to `430f3d48a97d8779f9c1985473912e594ccca1ae`, the toolkit revision used by COSMIC applets 1.11.0. Keep `--locked` for reproducible builds.
 
-The applet runs one asynchronous `lsblk --json --bytes --tree` scan at a time, with a five-second timeout and cancellation of a timed-out child. Filesystem statistics are collected by that child process; filesystem I/O never blocks rendering. A small blocking worker reads sysfs/udev metadata. Normal updates run every two seconds; slow or failing devices can delay a reading and are reported explicitly.
+The applet runs one asynchronous `lsblk --json --bytes --tree` scan at a time, with a five-second timeout and cancellation of a timed-out child. Filesystem statistics are collected by that child process; filesystem I/O never blocks rendering. A small blocking worker reads sysfs/udev metadata. Normal updates run every 20 seconds; slow or failing devices can delay a reading and are reported explicitly.
 
 Source layout:
 
